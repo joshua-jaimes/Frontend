@@ -7,7 +7,7 @@ import LecturaDiaria from '../views/LecturaDiaria.vue'
 import Adminpanel from '../views/Adminpanel.vue'
 import GeneradorNumeroPrincipal from '../views/GeneradorNumeroPrincipal.vue'
 import PerfilUsuario from '../views/PerfilUsuario.vue'
-import MembresiasYPagos from '../views/membresías_y_pagos.vue'
+import MembresiasYPagos from '../views/Membresías_y_Pagos.vue'
 import MisLecturas from '../views/MisLecturas.vue'
 /* import LoginAdministrador from '../views/loginAdministrador.vue' */
 
