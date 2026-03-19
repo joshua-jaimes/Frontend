@@ -31,7 +31,8 @@ Copiar
       </div>
       <div class="right">
        <div class="top-link gt-md" @click="router.push({ name: 'loginUsuario' })">
-
+¿Ya tienes cuenta? <a href="#">Inicia sesión</a>
+</div>
         <div class="form-section">
           <!-- Botón Volver -->
           <button @click="router.push('/login')" style="padding:10px 20px;">
