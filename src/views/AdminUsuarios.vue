@@ -128,9 +128,7 @@
                           <span class="mi" style="font-size:16px;">edit</span>
                         </button>
                         <!-- Toggle estado -->
-                        <button class="icon-btn" :class="u.activo !== false ? 'btn-yellow' : 'btn-green'" @click="toggleEstado(u)" :title="u.activo !== false ? 'Desactivar' : 'Activar'">
-                          <span class="mi" style="font-size:16px;">{{ u.activo !== false ? 'pause_circle' : 'play_circle' }}</span>
-                        </button>
+                       
                         <!-- Toggle plan -->
                         <button class="icon-btn btn-purple" @click="togglePlan(u)" :title="u.estado === 1 ? 'Pasar a Gratuito' : 'Activar Premium'">
                           <span class="mi" style="font-size:16px;">{{ u.estado === 1 ? 'star_border' : 'star' }}</span>
