@@ -347,7 +347,7 @@ const guardarUsuario = async () => {
     if (editMode.value) {
       // PUT editar
       await axios.put(
-        `http://localhost:3000/api/usuario/${formUser.value.id}`,
+        `https://joshua-jos-proyect-backend.onrender.com/api/usuario/${formUser.value.id}`,
         { nombre: formUser.value.nombre },
         getHeaders()
       )
@@ -356,7 +356,7 @@ const guardarUsuario = async () => {
       notifySuccess('Usuario editado correctamente')
     } else {
       // POST crear
-      await axios.post('http://localhost:3000/api/usuario', {
+      await axios.post('https://joshua-jos-proyect-backend.onrender.com/api/usuario', {
         nombre: formUser.value.nombre,
         email: formUser.value.email,
         password: formUser.value.password,
@@ -381,8 +381,8 @@ const aplicarPlan = async (nuevoEstado) => {
   loadingPlan.value = nuevoEstado
   try {
     const url = nuevoEstado === 1
-      ? `http://localhost:3000/api/usuario/activar/${formUser.value.id}`
-      : `http://localhost:3000/api/usuario/inactivar/${formUser.value.id}`
+      ? `https://joshua-jos-proyect-backend.onrender.com/api/usuario/activar/${formUser.value.id}`
+      : `https://joshua-jos-proyect-backend.onrender.com/api/usuario/inactivar/${formUser.value.id}`
     await axios.put(url, {}, getHeaders())
     formUser.value.estado = nuevoEstado
     const idx = usuarios.value.findIndex(x => x._id === formUser.value.id)
@@ -401,8 +401,8 @@ const togglePlan = async (u) => {
   const nuevoEstado = u.estado === 1 ? 0 : 1
   try {
     const url = nuevoEstado === 1
-      ? `http://localhost:3000/api/usuario/activar/${u._id}`
-      : `http://localhost:3000/api/usuario/inactivar/${u._id}`
+      ? `https://joshua-jos-proyect-backend.onrender.com/api/usuario/activar/${u._id}`
+      : `https://joshua-jos-proyect-backend.onrender.com/api/usuario/inactivar/${u._id}`
     await axios.put(url, {}, getHeaders())
     const idx = usuarios.value.findIndex(x => x._id === u._id)
     if (idx !== -1) usuarios.value[idx].estado = nuevoEstado
@@ -419,7 +419,7 @@ const toggleEstado = async (u) => {
   try {
     // Ajusta el endpoint según tu API
     await axios.put(
-      `http://localhost:3000/api/usuario/${u._id}`,
+      `https://joshua-jos-proyect-backend.onrender.com/api/usuario/${u._id}`,
       { activo: nuevoActivo },
       getHeaders()
     )
@@ -443,7 +443,7 @@ const ejecutarEliminar = async () => {
   try {
     eliminando.value = true
     await axios.delete(
-      `http://localhost:3000/api/usuario/${usuarioAEliminar.value._id}`,
+      `https://joshua-jos-proyect-backend.onrender.com/api/usuario/${usuarioAEliminar.value._id}`,
       getHeaders()
     )
     usuarios.value = usuarios.value.filter(x => x._id !== usuarioAEliminar.value._id)
