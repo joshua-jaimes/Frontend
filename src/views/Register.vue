@@ -35,9 +35,7 @@ Copiar
 </div>
         <div class="form-section">
           <!-- Botón Volver -->
-          <button @click="router.push('/login')" style="padding:10px 20px;">
-  Volver al Login
-</button>
+         
           <h2>Crear Cuenta</h2>
           <p>Ingresa tus datos para calcular tu numerología inicial.</p>
           <form @submit.prevent="submit" class="form" novalidate>
