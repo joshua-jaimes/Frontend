@@ -196,10 +196,12 @@
 import { ref, computed, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { useAuthStore } from "../stores/Auth"
+import { useFavoritosStore } from "../stores/Favoritos"
 import { getData, postData } from "../services/apiCliente"
 import { useNotify } from "../composables/useNotify"
 
 const auth = useAuthStore()
+const favStore = useFavoritosStore()
 const router = useRouter()
 const { notifySuccess, notifyError, notifyWarning, notifyLoading } = useNotify()
 
@@ -283,23 +285,21 @@ const calcularCompatibilidad = () => {
 }
 
 
-// ══ Favoritos (mismo localStorage que MisLecturas.vue) ══
-const FAVES_KEY_LD = `ml_fav_${auth.usuario?._id || 'guest'}`
-const favIds = ref(JSON.parse(localStorage.getItem(FAVES_KEY_LD) || '[]'))
-
-const esLecturaFavorita = computed(() => lectura.value?._id ? favIds.value.includes(lectura.value._id) : false)
+// ══ Favoritos (Pinia con fallback temporal localStorage) ══
+const esLecturaFavorita = computed(() => 
+  lectura.value?._id ? favStore.esFav(lectura.value._id) : false
+)
 
 const toggleFavLectura = () => {
   if (!lectura.value?._id) return
   const id = lectura.value._id
-  if (favIds.value.includes(id)) {
-    favIds.value = favIds.value.filter(f => f !== id)
+  if (favStore.esFav(id)) {
+    favStore.toggleFav(id)
     notifySuccess('Lectura quitada de favoritos.', 'favorite_border')
   } else {
-    favIds.value = [...favIds.value, id]
+    favStore.toggleFav(id)
     notifySuccess('Lectura guardada en favoritos. ❤️', 'favorite')
   }
-  localStorage.setItem(FAVES_KEY_LD, JSON.stringify(favIds.value))
 }
 
 // ══ Copiar lectura ══

@@ -120,11 +120,11 @@
 
 
                 <button class="upgrade-btn" @click="irAMembresias" :disabled="loadingMembresia">
-  <span v-if="loadingMembresia" class="spinner"></span>
+  <span v-if="loadingMembresia" class="spinner-upgrade"></span>
   <template v-else>
     <span class="material-icons">upgrade</span>
+    Mejorar Plan
   </template>
-  <span>{{ loadingMembresia ? 'Cargando...' : 'Mejorar Plan' }}</span>
 </button>
 
                 
@@ -169,6 +169,9 @@
 </template>
 
 <script setup>
+
+
+
 import { useAuthStore } from "../stores/Auth.js"
 import { computed, ref, onMounted } from "vue"
 import { getData, postData } from "../services/apiCliente"
@@ -286,6 +289,9 @@ const cargarMisLecturas = async () => {
   }
 }
 
+
+
+
 // ══ Predicción Semanal (reutiliza endpoint existente con tipo='semanal') ══
 const prediccionSemanal = ref(null)
 const cargandoSemanal = ref(false)
@@ -319,6 +325,11 @@ const generarPrediccionSemanal = async () => {
     cargandoSemanal.value = false
   }
 }
+
+
+
+
+
 
 // ══ Compatibilidad Numerológica (cálculo puro de frontend) ══
 const compatFecha1 = ref('')
@@ -374,9 +385,10 @@ const irALecturaPrincipal = () => {
 const cargandoPrincipal = ref(false)
 const loadingMembresia = ref(false)
 
-const irAMembresias = () => {
+const irAMembresias = async () => {        // 👈 agrega async
   loadingMembresia.value = true
-  router.push({ name: 'MembresiasYPagos' })
+  await router.push({ name: 'MembresiasYPagos' })  // 👈 agrega await
+  loadingMembresia.value = false
 }
 
 console.log("USUARIO DEL STORE:", auth.usuario)
@@ -400,6 +412,23 @@ $gray-200: #e5e7eb;
 $gray-100: #f3f4f6;
 
 * { box-sizing: border-box; }
+
+
+.spinner-upgrade {
+  width: 1.2em;
+  height: 1.2em;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin-upgrade 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin-upgrade {
+  to { transform: rotate(360deg); }
+}
+
+
 
 .bg-dashboard {
   background: $bg;
@@ -514,19 +543,6 @@ $gray-100: #f3f4f6;
     }
   }
 
-.spinner {
-  width: 1.2em;
-  height: 1.2em;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-  display: inline-block;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
 
 
   
@@ -591,20 +607,12 @@ $gray-100: #f3f4f6;
   .welcome-title {
     font-size: 1.875rem;
     font-weight: 700;
-    color: #111;
+    color: white;
     margin-bottom: 0.25rem;
-
-    @media (prefers-color-scheme: dark) {
-      color: white;
-    }
   }
 
   .welcome-subtitle {
-    color: #6b7280;
-
-    @media (prefers-color-scheme: dark) {
-      color: #9ca3af;
-    }
+    color: #9ca3af;
   }
 
   .life-number {
@@ -1017,6 +1025,25 @@ $gray-100: #f3f4f6;
       margin-top: 0.25rem;
     }
   }
+
+.spinner-upgrade {
+  width: 1.2em;
+  height: 1.2em;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin-upgrade 0.7s linear infinite;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+@keyframes spin-upgrade {
+  to { transform: rotate(360deg); }
+}
+
+
+
+
 
   .credits-progress {
     margin-bottom: 1.5rem;

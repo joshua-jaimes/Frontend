@@ -228,6 +228,30 @@
               </div>
             </div>
           </div>
+
+          <!-- ══ Preferencias de Pantalla ══ -->
+          <div class="form-card">
+            <div class="section-header">
+              <span class="mso section-icon">tune</span>
+              <h3 class="section-title">Preferencias</h3>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+              <div>
+                <p class="field-label" style="margin-bottom:4px">Modo de pantalla</p>
+                <p style="font-size:12px;color:#64748b;margin:0">{{ $q.dark.isActive ? 'Actualmente en modo oscuro' : 'Actualmente en modo claro' }}</p>
+              </div>
+              <q-btn
+                :label="$q.dark.isActive ? 'Modo Claro' : 'Modo Oscuro'"
+                :icon="$q.dark.isActive ? 'light_mode' : 'dark_mode'"
+                @click="$q.dark.toggle()"
+                outline
+                rounded
+                :color="$q.dark.isActive ? 'amber' : 'deep-purple'"
+                style="font-weight:600;"
+              />
+            </div>
+          </div>
+
           <div class="danger-zone row items-center justify-between flex-wrap" style="gap:24px">
             <div>
               <h4 class="danger-title">Sesión y Seguridad</h4>
@@ -259,7 +283,9 @@ import { useAuthStore } from '../stores/Auth'
 import { useRouter } from 'vue-router'
 import { useNotify } from '../composables/useNotify'
 import { putData } from '../services/apiCliente'
+import { useQuasar } from 'quasar'
 
+const $q   = useQuasar()
 const auth   = useAuthStore()
 const router = useRouter()
 const { notifySuccess, notifyError, notifyWarning } = useNotify()

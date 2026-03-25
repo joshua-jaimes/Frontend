@@ -295,7 +295,7 @@ const usuariosFiltrados = computed(() => {
 
 // ── Headers con token ─────────────────────────────────────────
 const getHeaders = () => {
-  const token = auth.token || localStorage.getItem('token') || ''
+  const token = auth.token || ''
   return { headers: { 'x-token': token, 'Content-Type': 'application/json' } }
 }
 
@@ -458,7 +458,6 @@ const ejecutarEliminar = async () => {
 // ── CERRAR SESIÓN ─────────────────────────────────────────────
 const cerrarSesion = () => {
   auth.logout()
-  localStorage.removeItem('token')
   router.push({ name: 'loginUsuario' })
 }
 
@@ -578,7 +577,6 @@ onMounted(() => {
 
 /* ── Form grid ── */
 .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-.form-col { }
 .form-col-full { grid-column:1/-1; }
 
 /* ── Plan box ── */

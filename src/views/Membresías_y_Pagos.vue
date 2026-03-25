@@ -66,7 +66,7 @@ import { postData } from '../services/apiCliente.js'
 const router = useRouter()
 const auth = useAuthStore()
 
-const annualBilling = ref(true)
+// annualBilling eliminado — solo plan mensual
 const activePayTab  = ref('card')
 const cardHolder    = ref('')
 const cardNumber    = ref('')
@@ -74,9 +74,9 @@ const cardExp       = ref('')
 const cardCvc       = ref('')
 const loadingMP     = ref(false)
 
-// ══ Precio según plan seleccionado ══
-const precioActual = () => annualBilling.value ? 470400 : 29000  // COP
-const tituloActual = () => annualBilling.value ? 'Plan Premium Anual - NumeraAI' : 'Plan Mensual - NumeraAI'
+// ══ Plan mensual fijo ══
+const precioActual = () => 29000                          // COP
+const tituloActual = () => 'Plan Premium Mensual - NumeraAI'
 
 // ══ Pagar con Mercado Pago ══
 const pagarConMercadoPago = async () => {

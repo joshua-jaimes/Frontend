@@ -328,7 +328,6 @@ const { notifySuccess, notifyError, notifyWarning } = useNotify()
 
 const cerrarSesion = () => {
   auth.logout()
-  localStorage.removeItem("token")
   router.push({ name: 'loginUsuario' })
 }
 

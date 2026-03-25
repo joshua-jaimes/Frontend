@@ -11,7 +11,10 @@
         <div class="logo-icon">
           <q-icon name="auto_awesome" size="lg" />
         </div>
-        <h3 class="logo-text">Num<span class="primary">AI</span></h3>
+        <h3
+          class="logo-text"
+          :style="logoStyle"
+        >Num<span class="primary">AI</span></h3>
       </div>
 
       <nav class="nav-menu">
@@ -41,7 +44,7 @@
       <div class="user-profile">
         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJx4eLv1skOsEEfsPV0qDIYSErReSPjx-hO9UyaGI9jOlijk8lQ7xcNRvRTzxD4n1PEHnQGuobGqbZ0bjGqEkOApGiS5mDyTxFAyj0NbjakEH7ptwCFziWRrC2Gfen3stPaj-pAH5ZbQWIXLkTn2rRj2CHgvOZZlmSduCrQV3XnkFZlrPJxpo_4oOZmbPvoTZoiqVP_Ofz2VePL2LBRJG9vNQYeW2KQTshVsic5Ag5syLaaE32FqcPni4osBYCQir8SSwH7H2wvp8" alt="user" class="user-avatar" />
         <div class="user-info">
-          <p class="user-name">{{ nombreUsuario }}</p>
+          <p class="user-name" :style="nombreStyle">{{ nombreUsuario }}</p>
           <p class="user-plan">{{ rolLabel }}</p>
         </div>
         <button class="logout-btn" @click="handleLogout">
@@ -62,6 +65,9 @@
 import { useAuthStore } from "../stores/Auth.js"
 import { computed } from "vue"
 import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+
+const $q = useQuasar()
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -73,6 +79,14 @@ const rolLabel = computed(() => {
   if (auth.usuario?.estado === 1) return 'Místico Pro'
   return 'Plan Gratuito'
 })
+
+// Estilos reactivos al dark mode de Quasar
+const logoStyle = computed(() => ({
+  color: $q.dark.isActive ? '#7311d4' : '#111'
+}))
+const nombreStyle = computed(() => ({
+  color: $q.dark.isActive ? '#D4D4D4' : '#111'
+}))
 
 const handleLogout = () => {
   auth.logout()
@@ -265,6 +279,56 @@ $surface-darker: #140c1c;
 
         @media (prefers-color-scheme: dark) {
           color: white;
+        }
+      }
+    }
+  }
+}
+
+// ── QUASAR DARK MODE (.body--dark inyectado por $q.dark.toggle()) ──────────────
+:global(.body--dark) {
+  .sidebar {
+    background: #0a0a0a !important;
+    border-right-color: #1a1a1a !important;
+
+    .logo-text {
+      color: #7311d4 !important;  // "Num" en morado, igual que "AI"
+    }
+
+    .nav-item {
+      color: #B0B0B0 !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.06) !important;
+        color: #E0E0E0 !important;
+      }
+
+      &.active {
+        background: rgba(115, 17, 212, 0.15) !important;
+        color: #9c4ddb !important;
+      }
+    }
+
+    .nav-divider {
+      border-top-color: #1a1a1a !important;
+    }
+
+    .user-profile {
+      border-top-color: #1a1a1a !important;
+
+      .user-name {
+        color: #D4D4D4 !important;  // gris claro visible sobre #0a0a0a
+      }
+
+      .user-plan {
+        color: #A0A0A0 !important;  // rol: gris tenue
+      }
+
+      .logout-btn {
+        color: #707070 !important;
+
+        &:hover {
+          color: #E0E0E0 !important;
         }
       }
     }

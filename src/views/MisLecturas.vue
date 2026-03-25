@@ -138,9 +138,11 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/Auth'
+import { useFavoritosStore } from '../stores/Favoritos'
 import { getData } from '../services/apiCliente'
 
 const auth = useAuthStore()
+const favStore = useFavoritosStore()
 
 // ══ Acceso general (Premium y Gratuito) ══
 const esPremium = computed(() => true)
@@ -162,16 +164,10 @@ const cargarLecturas = async () => {
   }
 }
 
-// ══ Favoritos (localStorage) ══
-const FAVES_KEY = `ml_fav_${auth.usuario?._id || 'guest'}`
-const favIds = ref(JSON.parse(localStorage.getItem(FAVES_KEY) || '[]'))
-
-const esFav = (id) => favIds.value.includes(id)
+// ══ Favoritos (Pinia con fallback temporal localStorage) ══
+const esFav = (id) => favStore.esFav(id)
 const toggleFav = (id) => {
-  favIds.value = esFav(id)
-    ? favIds.value.filter(f => f !== id)
-    : [...favIds.value, id]
-  localStorage.setItem(FAVES_KEY, JSON.stringify(favIds.value))
+  favStore.toggleFav(id)
 }
 
 const lecturasFavoritas = computed(() =>
